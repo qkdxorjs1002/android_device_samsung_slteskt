@@ -1,51 +1,61 @@
-import init.universal5430.wifi.rc
 import init.universal5430.usb.rc
+import init.wifi.rc
+import init.fac.rc
 
 on init
+
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /mnt/media_rw/UsbDriveA 0700 media_rw media_rw
+    mkdir /mnt/media_rw/UsbDriveB 0700 media_rw media_rw
+    mkdir /mnt/media_rw/UsbDriveC 0700 media_rw media_rw
+    mkdir /mnt/media_rw/UsbDriveD 0700 media_rw media_rw
+    mkdir /mnt/media_rw/UsbDriveE 0700 media_rw media_rw
+    mkdir /mnt/media_rw/UsbDriveF 0700 media_rw media_rw
+
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
 
-    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
-    mkdir /storage/usbdisk 0700 root root
-
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
     export EMULATED_STORAGE_TARGET /storage/emulated
-    export SECONDARY_STORAGE /storage/usbdisk
 
     # Support legacy paths
     symlink /storage/emulated/legacy /sdcard
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
-    symlink /storage/usbdisk /usbdisk
-    symlink /storage/usbdisk /mnt/usbdisk
     symlink /data/app /factory
+
+    # map "real" external storages paths also in same way. backwards compatibility.
+    symlink /storage/UsbDriveA /mnt/UsbDriveA
+    symlink /storage/UsbDriveB /mnt/UsbDriveB
+    symlink /storage/UsbDriveC /mnt/UsbDriveC
+    symlink /storage/UsbDriveD /mnt/UsbDriveD
+    symlink /storage/UsbDriveE /mnt/UsbDriveE
+    symlink /storage/UsbDriveF /mnt/UsbDriveF
+
+    mkdir /storage/UsbDriveA 0700 root root
+    mkdir /storage/UsbDriveB 0700 root root
+    mkdir /storage/UsbDriveC 0700 root root
+    mkdir /storage/UsbDriveD 0700 root root
+    mkdir /storage/UsbDriveE 0700 root root
+    mkdir /storage/UsbDriveF 0700 root root
 
     mkdir /efs 0771 radio system
     symlink /dev/block/mmcblk0p13 /dev/mbin0
     restorecon /dev/mbin0
     symlink  /sys/devices/15510000.usb/ehci_power /dev/ehci_power
     symlink  /sys/devices/10f24000.mipi-lli /dev/mipi-lli
-    write /sys/class/net/rmnet0/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet1/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet2/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet3/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet4/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet5/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet6/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet7/queues/rx-0/rps_cpus 1
-    write /proc/sys/net/core/netdev_max_backlog 5000
 
     mkdir /tombstones
-
-# Support Preload install apks
-    mkdir /preload 0771 system system
 
 #Private Mode
     mkdir /mnt/shell/privatemode 0700 system system
     mkdir /storage/Private 0000 system system
+
+# CPU Idle
+    chown system radio /sys/module/cpuidle/parameters/enable_mask
 
 # Make param link
     symlink /dev/block/mmcblk0p8 /dev/block/param
@@ -61,6 +71,16 @@ on post-fs-data
 
     # Multimedia property for Smart View
     setprop media.enable-commonsource true
+
+# SKT PM PlayReady
+    mkdir /data/playready 771 system skt
+    chown system skt /data/playready
+    chmod 0771 /data/playready
+
+# SKT DRM for hoppin
+    mkdir /data/data/.sktdrm 0775
+    chown system radio /data/data/.sktdrm
+    chmod 0775 /data/data/.sktdrm
 
     setprop vold.post_fs_data_done 1
 
@@ -81,31 +101,19 @@ on post-fs-data
     chown system system /data/privatemode
     restorecon /data/privatemode
 
+# for SKT TBASED
+    mkdir /data/tbased 0775 root wifi
+    chown root wifi /data/tbased
+    chmod 0775 /data/tbased
+
+    chown wifi wifi /system/lib/libiwlan_module.so
+    chmod 0644 /system/lib/libiwlan_module.so
+    chmod 0755 /system/bin/tbased
+
+    chmod 0644 /data/misc/wifi/hiddenAPs.txt
+
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
-
-# Define TCP buffer sizes for various networks
-#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
-    setprop net.tcp.buffersize.default 6144,131070,1056768,6144,24576,165312
-    setprop net.tcp.buffersize.lte     786432,1572864,3840000,786432,1572864,3840000
-    setprop net.tcp.buffersize.umts    6141,131070,1056768,6144,24576,165312
-    setprop net.tcp.buffersize.hspa    6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hsupa   6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hsdpa   6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hspap   6141,131070,1830912,6144,24576,1830912
-    setprop net.tcp.buffersize.edge    6140,39420,52560,6144,24576,52560
-    setprop net.tcp.buffersize.gprs    6138,45000,45000,6144,13140,17520
-    setprop net.tcp.buffersize.evdo    6141,131070,393216,6144,24576,393216
-
-	# For setting tcp delayed ack
-    chown system system /sys/kernel/ipv4/tcp_delack_seg
-    chown system system /sys/kernel/ipv4/tcp_use_userconfig
-
-# Define TCP delayed ack settings for WiFi & LTE
-    setprop net.tcp.delack.default     1    
-    setprop net.tcp.delack.lte         8
-    setprop net.tcp.usercfg.lte        1
-    setprop net.tcp.usercfg.default    0
 
     # Reduce reserved lowmem from ~48MB to ~12MB
     write /proc/sys/vm/lowmem_reserve_ratio "128 128"
@@ -131,6 +139,27 @@ on boot
     # For kernel lock in BT/WiFi race condtion
     chmod 0600 /dev/btlock
     chown bluetooth bluetooth /dev/btlock
+
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,4525824,524288,1048576,4525824
+    setprop net.tcp.buffersize.lte     1048576,3145728,4194304,1048576,3145728,4194304
+    setprop net.tcp.buffersize.umts    4094,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.hspa    4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hsupa   4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hsdpa   4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4092,30000,30000,4096,8760,11680
+    setprop net.tcp.buffersize.evdo    4094,87380,262144,4096,16384,262144
+
+# Define default initial receive window size in segments.
+    setprop net.tcp.default_init_rwnd 60
+# Assign TCP buffer thresholds to be ceiling value of technology maximums
+# Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  4194304
+    write /proc/sys/net/core/wmem_max  2097152
 
 ###############################################################################
 # System LSI
@@ -349,20 +378,12 @@ on boot
     chown radio system /sys/class/secgpio_check/secgpio_check_all/gpiosleep_check
     chown radio system /sys/class/secgpio_check/secgpio_check_all/checked_sleepGPIO
 
-# CPU Idle
-    chown system radio /sys/module/cpuidle/parameters/enable_mask
-
 # RTC logging daemon
     chmod 0770 /system/bin/rtc_log.sh
     chown system system /system/bin/rtc_log.sh
 
     #Remove SUID bit for iproute2 ip tool
 #    chmod 0755 /system/bin/ip
-
-#Private Mode
-service privatemode /system/bin/sdcard /data/privatemode /mnt/shell/privatemode 1000 1000
-    class late_start
-    oneshot
 
 on fs
     mount_all /fstab.universal5430
@@ -373,13 +394,11 @@ on fs
     chown radio system /sys/devices/virtual/misc/umts_dm0/dm_state
 
 #For Absolute Persistence Partition
-
     mkdir /persdata 0755 system system
     mkdir /persdata/absolute 0750 system system
 
     wait /dev/block/platform/15540000.dwmmc0/by-name/PERSDATA
-    # not supported by CM init
-    #check_fs /dev/block/platform/15540000.dwmmc0/by-name/PERSDATA ext4
+    check_fs /dev/block/platform/15540000.dwmmc0/by-name/PERSDATA ext4
     mount ext4 /dev/block/platform/15540000.dwmmc0/by-name/PERSDATA /persdata/absolute nosuid nodev barrier=1
 
     chown system system /persdata
@@ -387,44 +406,9 @@ on fs
     chown system system /persdata/absolute
     chmod 0750 /persdata/absolute
 
-#MDM requirement
-    mkdir /dev/block/modem
-    symlink /dev/block/platform/15540000.dwmmc0/by-name/m9kefs1 /dev/block/modem/m9kefs1
-    symlink /dev/block/platform/15540000.dwmmc0/by-name/m9kefs2 /dev/block/modem/m9kefs2
-    symlink /dev/block/platform/15540000.dwmmc0/by-name/m9kefs3 /dev/block/modem/m9kefs3
-    symlink /dev/block/platform/15540000.dwmmc0/by-name/ /dev/block/modem/dump_path
-    chown system radio /dev/block/modem/m9kefs1
-    chmod 0775 /dev/block/modem/m9kefs1
-    chown system radio /dev/block/modem/m9kefs2
-    chmod 0775 /dev/block/modem/m9kefs2
-    chown system radio /dev/block/modem/m9kefs3
-    chmod 0775 /dev/block/modem/m9kefs3
-    chown system radio /dev/block/modem/dump_path
-    chmod 0775 /dev/block/modem/dump_path
-
-    mkdir /firmware 0771 system system
-    mount vfat /dev/block/mmcblk0p13 /firmware ro shortname=lower fmask=0133,dmask=0022
-    chown system system /tombstones
-    chmod 0775 /tombstones
-    mkdir /tombstones/modem 0775 system system
-    mkdir /tombstones/lpass 0775 system system
-    mkdir /tombstones/wcnss 0775 system system
-    mkdir /tombstones/dsps 0775 system system
-    rmdir /tombstones/qcks
-    mkdir /tombstones/qcks 771 system system
-    rmdir /tombstones/efs
-    mkdir /tombstones/efs 771 system system
-
-    chown system radio /dev/block/platform/15540000.dw_mmc0/by-name
-    chmod 0775 /dev/block/platform/15540000.dw_mmc0/by-name
-
 # Permissions for backlight
     chown system system /sys/class/backlight/panel/brightness
     chown system system /sys/class/backlight/panel/auto_brightness
-
-# Permissions for torch
-    chown system camera /sys/class/leds/torch-sec1/brightness
-    chmod 0660 /sys/class/leds/torch-sec1/brightness
 
 # Permissions for LCD
     chown system radio /sys/class/lcd/panel/lcd_type
@@ -470,6 +454,11 @@ on fs
     rm /data/beidou_started
     rm /data/smd_started
     rm /data/sv_cno.info
+
+# MOBILE OFFICE Permanent memory access
+    mkdir /efs/security 0771 root root
+    chown radio system /efs/security
+    chmod 0771 /efs/security
 
 # SENSORS
 # Accelerometer_sensor
@@ -831,6 +820,9 @@ on fs
     chmod 0660 /dev/usb_mtp_gadget
     chown system mtp /dev/usb_mtp_gadget
 
+# Permissions for usb_lock
+    chown system radio /sys/class/android_usb/android0/usb_lock
+
 # terminal mode
 	chmod 0660 /sys/class/android_usb/android0/terminal_version
 	chown system system /sys/class/android_usb/android0/terminal_version
@@ -916,23 +908,33 @@ on fs
     chown system system /sys/class/leds/led_g/blink
     chown system system /sys/class/leds/led_b/blink
 
+# High-speed Network Interface
+    write /proc/sys/net/core/netdev_max_backlog 8192
+    write /sys/class/net/rmnet0/queues/rx-0/rps_cpus 1
+    write /sys/class/net/rmnet1/queues/rx-0/rps_cpus 1
+    write /sys/class/net/rmnet2/queues/rx-0/rps_cpus 1
+    write /sys/class/net/rmnet3/queues/rx-0/rps_cpus 1
+
 # ARGOSD network_throughput
     chown system system /dev/network_throughput
 
-service cpboot-daemon /sbin/cbd -d -txmm72xx -bl -ml -p 13
+# CP Boot Daemon (CBD)
+service cpboot-daemon /sbin/cbd -d -t ss300 -b s -m l -p 13
     class main
     user root
-    group radio cache inet misc audio sdcard_rw log sdcard_r shell
+    group radio cache inet misc audio sdcard_r sdcard_rw log shell
     seclabel u:r:cbd:s0
-
-service netmgrd /system/bin/netmgrd
-    class late_start
+on property:persist.sys.cpboot=disable
+    stop cpboot-daemon
 
 # ARGOSD
 service argos-daemon /system/bin/argosd
     class main
     user system
     group system radio
+
+service netmgrd /system/bin/netmgrd
+    class late_start
 
 # DIAG
 service DIAG-daemon /system/bin/diagexe
@@ -984,10 +986,41 @@ service exyrngd /system/bin/exyrngd -b
     oneshot
 
 # virtual sdcard daemon running as media_rw (1023)
-service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l -r /data/media /mnt/shell/emulated
     class late_start
+    oneshot
 
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+service fuse_extSdCard /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d -f /mnt/media_rw/extSdCard /storage/extSdCard
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveA /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveA /storage/UsbDriveA
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveB /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveB /storage/UsbDriveB
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveC /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveC /storage/UsbDriveC
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveD /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveD /storage/UsbDriveD
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveE /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveE /storage/UsbDriveE
+    class late_start
+    disabled
+    oneshot
+
+service fuse_UsbDriveF /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/UsbDriveF /storage/UsbDriveF
     class late_start
     disabled
     oneshot
@@ -1031,11 +1064,23 @@ service TvoutService_C /system/bin/bintvoutservice
 on property:ro.SecEDS.enable=false
     stop TvoutService_C
 
+# Secure Storage startup
+service secure_storage /system/bin/secure_storage_daemon
+    class core
+    user system
+    group system
+    disabled
+
 # SENSOR FRAMEWORK : starts fingerprintService
 service vcsFPService /system/bin/vcsFPService
     class late_start
     user system
     group system
+
+#Private Mode
+service privatemode /system/bin/sdcard /data/privatemode /mnt/shell/privatemode 1000 1000
+    class late_start
+    oneshot
 
 on property:ro.securestorage.support=true
     mkdir /dev/.secure_storage
@@ -1054,6 +1099,10 @@ service cs_service /system/bin/cs
 on property:sys.mobicoredaemon.enable=true
     start cs_service
 
+# Reactivation lock
+service actlmand /system/bin/actlmand
+	class late_start
+
 # RTC logging daemon
 service rtc_log /system/bin/sh /system/bin/rtc_log.sh
     class main
@@ -1068,11 +1117,11 @@ service ipsec-daemon /system/bin/IPSecService
     user root
     group system
 
-# Modem Logging daemon
-service ML-daemon /system/bin/mlexe
+# SKT TBASE
+service tbased /system/bin/tbased
     class main
     user root
-    group system radio inet net_raw
+    oneshot
 
 # SSWAP
 service swapon /sbin/sswap -s
