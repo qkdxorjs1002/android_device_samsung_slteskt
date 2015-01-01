@@ -1,5 +1,5 @@
 import init.universal5430.usb.rc
-import init.wifi.rc
+import init.universal5430.wifi.rc
 import init.fac.rc
 
 on init
@@ -69,19 +69,6 @@ on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
-    # Multimedia property for Smart View
-    setprop media.enable-commonsource true
-
-# SKT PM PlayReady
-    mkdir /data/playready 771 system skt
-    chown system skt /data/playready
-    chmod 0771 /data/playready
-
-# SKT DRM for hoppin
-    mkdir /data/data/.sktdrm 0775
-    chown system radio /data/data/.sktdrm
-    chmod 0775 /data/data/.sktdrm
-
     setprop vold.post_fs_data_done 1
 
     # Permissions Camera
@@ -100,17 +87,6 @@ on post-fs-data
     mkdir /data/privatemode 0770 system system
     chown system system /data/privatemode
     restorecon /data/privatemode
-
-# for SKT TBASED
-    mkdir /data/tbased 0775 root wifi
-    chown root wifi /data/tbased
-    chmod 0775 /data/tbased
-
-    chown wifi wifi /system/lib/libiwlan_module.so
-    chmod 0644 /system/lib/libiwlan_module.so
-    chmod 0755 /system/bin/tbased
-
-    chmod 0644 /data/misc/wifi/hiddenAPs.txt
 
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -1116,12 +1092,6 @@ service ipsec-daemon /system/bin/IPSecService
     socket ipsec_socket stream 660 root system
     user root
     group system
-
-# SKT TBASE
-service tbased /system/bin/tbased
-    class main
-    user root
-    oneshot
 
 # SSWAP
 service swapon /sbin/sswap -s
