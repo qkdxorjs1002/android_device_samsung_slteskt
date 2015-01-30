@@ -28,15 +28,12 @@ on init
     restorecon /dev/mbin0
     symlink  /sys/devices/15510000.usb/ehci_power /dev/ehci_power
     symlink  /sys/devices/10f24000.mipi-lli /dev/mipi-lli
+# High-speed Network Interface
+    write /proc/sys/net/core/netdev_max_backlog 8192
     write /sys/class/net/rmnet0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rmnet1/queues/rx-0/rps_cpus 1
     write /sys/class/net/rmnet2/queues/rx-0/rps_cpus 1
     write /sys/class/net/rmnet3/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet4/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet5/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet6/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet7/queues/rx-0/rps_cpus 1
-    write /proc/sys/net/core/netdev_max_backlog 5000
 
     mkdir /tombstones
 
@@ -86,26 +83,17 @@ on boot
 
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
-    setprop net.tcp.buffersize.default 6144,131070,1056768,6144,24576,165312
-    setprop net.tcp.buffersize.lte     786432,1572864,3840000,786432,1572864,3840000
-    setprop net.tcp.buffersize.umts    6141,131070,1056768,6144,24576,165312
-    setprop net.tcp.buffersize.hspa    6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hsupa   6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hsdpa   6141,131070,1056768,6144,24576,393216
-    setprop net.tcp.buffersize.hspap   6141,131070,1830912,6144,24576,1830912
-    setprop net.tcp.buffersize.edge    6140,39420,52560,6144,24576,52560
-    setprop net.tcp.buffersize.gprs    6138,45000,45000,6144,13140,17520
-    setprop net.tcp.buffersize.evdo    6141,131070,393216,6144,24576,393216
-
-	# For setting tcp delayed ack
-    chown system system /sys/kernel/ipv4/tcp_delack_seg
-    chown system system /sys/kernel/ipv4/tcp_use_userconfig
-
-# Define TCP delayed ack settings for WiFi & LTE
-    setprop net.tcp.delack.default     1    
-    setprop net.tcp.delack.lte         8
-    setprop net.tcp.usercfg.lte        1
-    setprop net.tcp.usercfg.default    0
+    setprop net.tcp.buffersize.default 4096,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,4525824,524288,1048576,4525824
+    setprop net.tcp.buffersize.lte     1048576,3145728,4194304,1048576,3145728,4194304
+    setprop net.tcp.buffersize.umts    4094,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.hspa    4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hsupa   4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hsdpa   4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4092,30000,30000,4096,8760,11680
+    setprop net.tcp.buffersize.evdo    4094,87380,262144,4096,16384,262144
 
     # Reduce reserved lowmem from ~48MB to ~12MB
     write /proc/sys/vm/lowmem_reserve_ratio "128 128"
@@ -131,6 +119,13 @@ on boot
     # For kernel lock in BT/WiFi race condtion
     chmod 0600 /dev/btlock
     chown bluetooth bluetooth /dev/btlock
+
+# Define default initial receive window size in segments.
+    setprop net.tcp.default_init_rwnd 60
+# Assign TCP buffer thresholds to be ceiling value of technology maximums
+# Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  4194304
+    write /proc/sys/net/core/wmem_max  2097152
 
 ###############################################################################
 # System LSI
@@ -924,6 +919,8 @@ service cpboot-daemon /sbin/cbd -d -t ss300 -b s -m l -p 13
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r shell
     seclabel u:r:cpboot-daemon:s0
+on property:persist.sys.cpboot=disable
+    stop cpboot-daemon
 
 service netmgrd /system/bin/netmgrd
     class late_start
@@ -1080,12 +1077,6 @@ service ipsec-daemon /system/bin/IPSecService
     socket ipsec_socket stream 660 root system
     user root
     group system
-
-# Modem Logging daemon
-service ML-daemon /system/bin/mlexe
-    class main
-    user root
-    group system radio inet net_raw
 
 # SSWAP
 service swapon /sbin/sswap -s

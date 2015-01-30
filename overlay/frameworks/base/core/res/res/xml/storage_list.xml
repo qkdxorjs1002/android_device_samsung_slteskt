@@ -44,12 +44,14 @@
     <!-- internal private storage -->
     <storage android:mountPoint="/storage/Private"
              android:storageDescription="@string/storage_sd_card"
+             android:emulated="false"
              android:primary="false"
              android:removable="false" />
 
     <!-- external usb storage -->
     <storage android:mountPoint="/storage/usbdisk"
              android:storageDescription="@string/storage_usb"
+             android:emulated="false"
              android:primary="false"
              android:removable="true" />
 
