@@ -77,6 +77,9 @@
 /dev/mobicore             0600   drmrpc     drmrpc
 /dev/mobicore-user        0660   drm        drmrpc
 
+# rfkill
+/dev/rfkill               0660   root       wifi
+
 # Secure MEM driver
 /dev/s5p-smem             0660   drm        drmrpc
 

@@ -17,7 +17,7 @@ TARGET_SOC := exynos5430
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_CPU_VARIANT := cortex-a7
+TARGET_CPU_VARIANT := cortex-a15
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 OVERRIDE_RS_DRIVER := libRSDriverArm.so
@@ -38,9 +38,10 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2401239040
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 28219277312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# TARGET_PREBUILT_KERNEL := device/samsung/slteskt/kernel
+#TARGET_PREBUILT_KERNEL := device/samsung/slteskt/kernel
 TARGET_KERNEL_CONFIG := cm_exynos5430-slteskt_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -99,8 +100,19 @@ COMMON_GLOBAL_CFLAGS += -DSAMSUNG_CAMERA_HARDWARE
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 BOARD_BATTERY_DEVICE_NAME := battery
 
-# RIL
+### RIL
 BOARD_VENDOR := samsung
+BOARD_PROVIDES_LIBRIL := true
+# hardware/samsung/ril
+BOARD_MODEM_TYPE := xmm7260
+# RIL.java overwrite
+BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+
+### WEBKIT
+ENABLE_WEBGL := true
+
+### CMHW
+BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
@@ -120,7 +132,7 @@ DEVICE_RESOLUTION := 720x1280
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
-TARGET_RECOVERY_DEVICE_MODULES += file_contexts
+TARGET_RECOVERY_DEVICE_MODULES += file_contexts #exyrngd
 
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_HAS_NO_REAL_SDCARD := true
@@ -134,5 +146,3 @@ TW_INCLUDE_JB_CRYPTO := true
 
 # The kernel has exfat support.
 TW_NO_EXFAT_FUSE := true
-
-TW_MTP_DEVICE := /dev/usb_mtp_gadget

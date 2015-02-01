@@ -1,5 +1,5 @@
 #
-# system.prop for slteskt
+# system.prop for slte
 #
 ro.product.model=SM-G850S
 ro.product.brand=samsung
@@ -10,3 +10,4 @@ ro.sf.lcd_density=320
 
 rild.libpath=/system/lib/libsec-ril.so
 rild.libargs=-d /dev/ttyS0
+ro.telephony.ril_class=SlteRIL

@@ -1,1 +1,2 @@
-add_lunch_combo liquid_slteskt-eng
+add_lunch_combo cm_slteskt-userdebug
+add_lunch_combo cm_slteskt-eng

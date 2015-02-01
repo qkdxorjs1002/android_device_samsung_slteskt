@@ -1,6 +1,8 @@
 ### Bluetooth
-vendor/firmware/BT_FW_VER_BCM4354_003.001.012.0239.0491_S_KR_B80_ORC_TxPwrBy0p5dB.hcd
+vendor/firmware/BT_FW_VER_BCM4354_003.001.012.0239.0473_S_LTE_B80_ORC_IncTxPwr1p5dB.hcd
 vendor/firmware/bcm4350.hcd
+vendor/firmware/bcm4350_semco.hcd
+vendor/firmware/bcm4350_wisol.hcd
 
 ### Wifi
 etc/wifi/bcmdhd_apsta.bin
@@ -101,7 +103,22 @@ vendor/lib/libwvm.so
 
 ### LPM
 bin/lpm
-lib/libQmageDecoder.so
+lib/libmaet.so
+lib/libsxqk_skia.so
+media/battery_cover.spi
+media/battery_error.spi
+media/battery_low.spi
+media/battery_temperature_error.spi
+media/battery_temperature_limit.spi
+media/dock_error.spi
+media/incompatible_charger.spi
+media/lcd_density.txt
+media/particle_intro.spi
+media/particle_loop.spi
+media/percentage.spi
+media/wave_loop.spi
+media/wireless_left.spi
+media/wireless_right.spi
 
 ### RNDG
 bin/exyrngd

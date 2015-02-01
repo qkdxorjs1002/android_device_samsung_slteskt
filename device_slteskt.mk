@@ -77,6 +77,10 @@ PRODUCT_PACKAGES += \
 ### RADIO
 ###########################################################
 
+# cpboot-daemon for xmm7260 modem
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/ril/sbin/cbd:root/sbin/cbd
+
 PRODUCT_PACKAGES += \
     libsecril-client \
     libsecril-client-sap
@@ -161,7 +165,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/configs/idc/Synaptics_HID_TouchPad.idc:/system/usr/idc/Synaptics_HID_TouchPad.idc \
-	$(LOCAL_PATH)/configs/keylayout/gpio_keys.kl:/system/usr/keylayout/gpio_keys.kl \
+	$(LOCAL_PATH)/configs/keylayout/gpio_keys_8.kl:/system/usr/keylayout/gpio_keys_8.kl \
 	$(LOCAL_PATH)/configs/keylayout/sec_touchkey.kl:/system/usr/keylayout/sec_touchkey.kl
 
 ###########################################################
@@ -186,6 +190,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
+
+###########################################################
+### RECOVERY
+###########################################################
+
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/recovery/sbin/exyrngd:recovery/root/sbin/exyrngd
 
 $(call inherit-product-if-exists, hardware/samsung_slsi/exynos5-insignal/exynos5.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
