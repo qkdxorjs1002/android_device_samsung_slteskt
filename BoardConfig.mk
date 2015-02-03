@@ -39,7 +39,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 28219277312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 #TARGET_PREBUILT_KERNEL := device/samsung/slteskt/kernel
-TARGET_KERNEL_CONFIG := cm_exynos5430-slteskt_defconfig
+TARGET_KERNEL_CONFIG := slteskt_04_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
@@ -101,12 +101,12 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
-BOARD_VENDOR := samsung
-BOARD_PROVIDES_LIBRIL := true
+#BOARD_VENDOR := samsung
+#BOARD_PROVIDES_LIBRIL := true
 # hardware/samsung/ril
-BOARD_MODEM_TYPE := xmm7260
+#BOARD_MODEM_TYPE := ss300
 # RIL.java overwrite
-BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+#BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
 ### WEBKIT
 ENABLE_WEBGL := true
@@ -129,6 +129,7 @@ BOARD_SEPOLICY_UNION := \
 
 DEVICE_RESOLUTION := 720x1280
 
+TARGET_PREBUILT_RECOVERY_KERNEL := device/slteskt/recovery-kernel
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"

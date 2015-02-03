@@ -20,10 +20,6 @@ PRODUCT_PACKAGES += \
     init.universal5430.wifi.rc \
     ueventd.universal5430.rc
 
-# This file gets automatically copied to the recovery root by CM.
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/init.recovery.universal5430.rc:root/init.recovery.universal5430.rc
-
 ###########################################################
 ### PERMISSONS
 ###########################################################
@@ -77,7 +73,7 @@ PRODUCT_PACKAGES += \
 ### RADIO
 ###########################################################
 
-# cpboot-daemon for xmm7260 modem
+# cpboot-daemon for ss300 modem
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/ril/sbin/cbd:root/sbin/cbd
 
@@ -197,6 +193,11 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/recovery/sbin/exyrngd:recovery/root/sbin/exyrngd
+
+# This file gets automatically copied to the recovery root by CM.
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/recovery/init.recovery.universal5430.rc:recovery/root/init.recovery.universal5430.rc \
+	$(LOCAL_PATH)/selinux/prebuilt_file_contexts:root/file_contexts
 
 $(call inherit-product-if-exists, hardware/samsung_slsi/exynos5-insignal/exynos5.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
