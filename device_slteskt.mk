@@ -13,12 +13,13 @@ LOCAL_PATH := device/samsung/slteskt
 ### RAMDISK
 ###########################################################
 
-PRODUCT_PACKAGES += \
-    fstab.universal5430 \
-    init.universal5430.rc \
-    init.universal5430.usb.rc \
-    init.universal5430.wifi.rc \
-    ueventd.universal5430.rc
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/recovery/init.recovery.universal5430.rc:recovery/root/init.recovery.universal5430.rc \
+    $(LOCAL_PATH)/ramdisk/fstab.universal5430:root/fstab.universal5430 \
+    $(LOCAL_PATH)/ramdisk/init.universal5430.rc:root/init.universal5430.rc \
+    $(LOCAL_PATH)/ramdisk/init.universal5430.usb.rc:root/init.universal5430.usb.rc \
+    $(LOCAL_PATH)/ramdisk/init.universal5430.wifi.rc:root/init.universal5430.wifi.rc \
+    $(LOCAL_PATH)/ramdisk/ueventd.universal5430.rc:root/ueventd.universal5430.rc
 
 ###########################################################
 ### PERMISSONS
@@ -188,16 +189,11 @@ PRODUCT_PACKAGES += \
 	Torch
 
 ###########################################################
-### RECOVERY
+### EXTRA
 ###########################################################
 
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/recovery/sbin/exyrngd:recovery/root/sbin/exyrngd
-
-# This file gets automatically copied to the recovery root by CM.
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/init.recovery.universal5430.rc:recovery/root/init.recovery.universal5430.rc \
-	$(LOCAL_PATH)/selinux/prebuilt_file_contexts:root/file_contexts
 
 $(call inherit-product-if-exists, hardware/samsung_slsi/exynos5-insignal/exynos5.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
