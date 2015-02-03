@@ -43,8 +43,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 #TARGET_PREBUILT_KERNEL := device/samsung/slteskt/recovery-kernel
 TARGET_KERNEL_CONFIG := slteskt_04_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
-#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
-
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
+TARGET_GCC_VERSION_AND := 4.7-sm
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 # Use these flags if the board has a ext4 partition larger than 2gb
@@ -103,10 +103,10 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
-#BOARD_VENDOR := samsung
-#BOARD_PROVIDES_LIBRIL := true
+BOARD_VENDOR := samsung
+BOARD_PROVIDES_LIBRIL := true
 # hardware/samsung/ril
-#BOARD_MODEM_TYPE := ss300
+BOARD_MODEM_TYPE := ss300
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
@@ -135,7 +135,7 @@ TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/slteskt/recovery-kernel
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
-#TARGET_RECOVERY_DEVICE_MODULES += file_contexts exyrngd
+TARGET_RECOVERY_DEVICE_MODULES += file_contexts #exyrngd
 
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_HAS_NO_REAL_SDCARD := true
