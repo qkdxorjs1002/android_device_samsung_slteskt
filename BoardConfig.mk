@@ -131,7 +131,7 @@ BOARD_SEPOLICY_UNION := \
 
 DEVICE_RESOLUTION := 720x1280
 
-TARGET_PREBUILT_RECOVERY_KERNEL := device/slteskt/recovery-kernel
+TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/slteskt/recovery-kernel
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
