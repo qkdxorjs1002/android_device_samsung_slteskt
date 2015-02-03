@@ -124,6 +124,9 @@ media/wireless_right.spi
 bin/exyrngd
 
 ### RIL
+bin/rild
+lib/libril.so
+lib/libreference-ril.so
 lib/libsecnativefeature.so
 lib/libsec-ril.so
 
