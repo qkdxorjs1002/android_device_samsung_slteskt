@@ -5,6 +5,8 @@ USE_CAMERA_STUB := true
 
 LOCAL_PATH := device/samsung/slteskt
 
+
+
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
 
@@ -41,7 +43,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 #TARGET_PREBUILT_KERNEL := device/samsung/slteskt/recovery-kernel
 TARGET_KERNEL_CONFIG := slteskt_04_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -106,7 +108,7 @@ BOARD_BATTERY_DEVICE_NAME := battery
 # hardware/samsung/ril
 #BOARD_MODEM_TYPE := ss300
 # RIL.java overwrite
-#BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
 ### WEBKIT
 ENABLE_WEBGL := true
@@ -133,7 +135,7 @@ TARGET_PREBUILT_RECOVERY_KERNEL := device/slteskt/recovery-kernel
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
-TARGET_RECOVERY_DEVICE_MODULES += file_contexts #exyrngd
+#TARGET_RECOVERY_DEVICE_MODULES += file_contexts exyrngd
 
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_HAS_NO_REAL_SDCARD := true
