@@ -103,12 +103,12 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
-BOARD_VENDOR := samsung
-BOARD_PROVIDES_LIBRIL := true
+#BOARD_VENDOR := samsung
+#BOARD_PROVIDES_LIBRIL := true
 # hardware/samsung/ril
-BOARD_MODEM_TYPE := ss300
+#BOARD_MODEM_TYPE := ss300
 # RIL.java overwrite
-BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+#BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
 ### WEBKIT
 ENABLE_WEBGL := true
