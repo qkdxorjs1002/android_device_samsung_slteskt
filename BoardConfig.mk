@@ -114,6 +114,7 @@ BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
 ### OTA PACKAGING
 TARGET_PROVIDES_RELEASETOOLS := true
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/samsung/slteskt/releasetools/ota_from_target_files
 
 ### WEBKIT
 ENABLE_WEBGL := true
