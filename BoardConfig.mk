@@ -103,7 +103,7 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
-#BOARD_VENDOR := samsung
+BOARD_VENDOR := samsung
 #BOARD_PROVIDES_LIBRIL := true
 # hardware/samsung/ril
 #BOARD_MODEM_TYPE := ss300
@@ -127,9 +127,12 @@ BOARD_SEPOLICY_DIRS := \
 	device/samsung/slteskt/sepolicy
 
 BOARD_SEPOLICY_UNION := \
+	app.te \
+	domain.te \
+	exyrngd.te \
 	file_contexts \
 	file.te \
-	uventd.te
+	ueventd.te
 
 ###########################################################
 ### TWRP RECOVERY

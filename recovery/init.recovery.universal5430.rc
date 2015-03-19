@@ -8,3 +8,4 @@ on boot
     setprop usb.product.mtpadb 6860
 
 service exyrngd /sbin/exyrngd -b
+	seclabel u:r:exyrngd:s0
