@@ -124,6 +124,7 @@ bin/exyrngd
 ### RIL
 lib/libsecnativefeature.so
 lib/libsec-ril.so
+bin/argosd
 
 ### Mobicore
 app/FFFFFFFF000000000000000000000001.drbin
