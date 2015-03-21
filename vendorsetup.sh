@@ -1,1 +1,1 @@
-add_lunch_combo cm_slte-eng
+add_lunch_combo cm_slteskt-eng

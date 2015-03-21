@@ -1,9 +1,9 @@
 USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
--include vendor/samsung/slte/BoardConfigVendor.mk
+-include vendor/samsung/slteskt/BoardConfigVendor.mk
 
-LOCAL_PATH := device/samsung/slte
+LOCAL_PATH := device/samsung/slteskt
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -29,7 +29,7 @@ BOARD_KERNEL_PAGESIZE := 2048
 #BOARD_KERNEL_CMDLINE := The bootloader ignores the cmdline from the boot.img
 BOARD_KERNEL_SEPARATED_DT := true
 # Extracted with libbootimg
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/slte/dtb.img
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/slteskt/dtb.img
 
 # fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00a00000
@@ -38,9 +38,9 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2401239040
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 28219277312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-#TARGET_PREBUILT_KERNEL := device/samsung/slte/kernel
-TARGET_KERNEL_CONFIG := cm_exynos5430-slte_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/slte
+#TARGET_PREBUILT_KERNEL := device/samsung/slteskt/kernel
+TARGET_KERNEL_CONFIG := cm_exynos5430-slteskt_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -53,7 +53,7 @@ TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 ### GRAPHICS
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/samsung/slte/configs/egl/egl.cfg
+BOARD_EGL_CFG := device/samsung/slteskt/configs/egl/egl.cfg
 # hwcomposer insignal
 BOARD_HDMI_INCAPABLE := true
 
@@ -119,7 +119,7 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/samsung/slteskt/releasetools
 
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
-	device/samsung/slte/sepolicy
+	device/samsung/slteskt/sepolicy
 
 BOARD_SEPOLICY_UNION := \
 	app.te \
@@ -137,7 +137,7 @@ BOARD_SEPOLICY_UNION := \
 DEVICE_RESOLUTION := 720x1280
 
 # Use our own init.rc without setting up functionfs
-TARGET_RECOVERY_INITRC := device/samsung/slte/recovery/init.rc
+TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
 TARGET_RECOVERY_DEVICE_MODULES += prebuilt_file_contexts exyrngd
 

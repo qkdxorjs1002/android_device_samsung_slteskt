@@ -1,2 +1,2 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/device_slte.mk
+    $(LOCAL_DIR)/device_slteskt.mk
