@@ -101,9 +101,6 @@ BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
 BOARD_VENDOR := samsung
-BOARD_PROVIDES_LIBRIL := true
-# hardware/samsung/ril
-BOARD_MODEM_TYPE := xmm7260
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
