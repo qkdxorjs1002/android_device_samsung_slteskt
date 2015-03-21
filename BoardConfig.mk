@@ -1,11 +1,9 @@
 USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
--include vendor/samsung/slteskt/BoardConfigVendor.mk
+-include vendor/samsung/slte/BoardConfigVendor.mk
 
-LOCAL_PATH := device/samsung/slteskt
-
-
+LOCAL_PATH := device/samsung/slte
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -31,7 +29,7 @@ BOARD_KERNEL_PAGESIZE := 2048
 #BOARD_KERNEL_CMDLINE := The bootloader ignores the cmdline from the boot.img
 BOARD_KERNEL_SEPARATED_DT := true
 # Extracted with libbootimg
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/slteskt/dtb.img
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/slte/dtb.img
 
 # fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00a00000
@@ -40,11 +38,10 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2401239040
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 28219277312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-#TARGET_PREBUILT_KERNEL := device/samsung/slteskt/recovery-kernel
-TARGET_KERNEL_CONFIG := slteskt_04_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6/bin/arm-eabi-
-#TARGET_GCC_VERSION_AND := 4.7-sm
+#TARGET_PREBUILT_KERNEL := device/samsung/slte/kernel
+TARGET_KERNEL_CONFIG := cm_exynos5430-slte_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/slte
+
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 # Use these flags if the board has a ext4 partition larger than 2gb
@@ -56,7 +53,7 @@ TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 ### GRAPHICS
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/samsung/slteskt/configs/egl/egl.cfg
+BOARD_EGL_CFG := device/samsung/slte/configs/egl/egl.cfg
 # hwcomposer insignal
 BOARD_HDMI_INCAPABLE := true
 
@@ -104,17 +101,11 @@ BOARD_BATTERY_DEVICE_NAME := battery
 
 ### RIL
 BOARD_VENDOR := samsung
-#BOARD_PROVIDES_LIBRIL := true
+BOARD_PROVIDES_LIBRIL := true
 # hardware/samsung/ril
-#BOARD_MODEM_TYPE := ss300
+BOARD_MODEM_TYPE := xmm7260
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
-#BOARD_RIL_NO_CELLINFOLIST := true
-
-
-### OTA PACKAGING
-TARGET_PROVIDES_RELEASETOOLS := true
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/samsung/slteskt/releasetools/ota_from_target_files
 
 ### WEBKIT
 ENABLE_WEBGL := true
@@ -124,14 +115,15 @@ BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
-	device/samsung/slteskt/sepolicy
+	device/samsung/slte/sepolicy
 
 BOARD_SEPOLICY_UNION := \
 	app.te \
+	device.te \
 	domain.te \
-	exyrngd.te \
 	file_contexts \
 	file.te \
+	vold.te \
 	ueventd.te
 
 ###########################################################
@@ -140,11 +132,10 @@ BOARD_SEPOLICY_UNION := \
 
 DEVICE_RESOLUTION := 720x1280
 
-TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/slteskt/recovery-kernel
 # Use our own init.rc without setting up functionfs
-TARGET_RECOVERY_INITRC := device/samsung/slteskt/recovery/init.rc
+TARGET_RECOVERY_INITRC := device/samsung/slte/recovery/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
-#TARGET_RECOVERY_DEVICE_MODULES := prebuilt_file_contexts exyrngd
+TARGET_RECOVERY_DEVICE_MODULES += prebuilt_file_contexts exyrngd
 
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_HAS_NO_REAL_SDCARD := true
