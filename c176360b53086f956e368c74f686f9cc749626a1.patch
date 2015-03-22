@@ -1,0 +1,33 @@
+From c176360b53086f956e368c74f686f9cc749626a1 Mon Sep 17 00:00:00 2001
+From: Andreas Schneider <asn@cryptomilk.org>
+Date: Fri, 13 Mar 2015 15:38:21 +0000
+Subject: recovery: Set recovery policy to permissive mode
+
+---
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index 9bd90ff..ef20aae 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -124,6 +124,7 @@ BOARD_SEPOLICY_UNION := \
+ 	domain.te \
+ 	file_contexts \
+ 	file.te \
++	recovery.te \
+ 	ueventd.te
+ 
+ ###########################################################
+diff --git a/sepolicy/recovery.te b/sepolicy/recovery.te
+new file mode 100644
+index 0000000..1785aa6
+--- /dev/null
++++ b/sepolicy/recovery.te
+@@ -0,0 +1,7 @@
++recovery_only(`
++  permissive recovery;
++
++  allow recovery system_radio_prop:property_service set;
++  allow recovery default_prop:property_service set;
++  allow recovery vold_prop:property_service set;
++')
+--
+cgit v0.9.1

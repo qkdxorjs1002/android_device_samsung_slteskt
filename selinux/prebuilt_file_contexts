@@ -234,7 +234,7 @@
 /dev/block/platform/dw_mmc.*    u:object_r:dw_mmc_device:s0
 /dev/block/platform/msm_sdcc.1/by-name/param		u:object_r:emmcblk_device:s0
 /dev/block/vnswap0		u:object_r:swap_device:s0
-/dev/bus/usb(/.*)?      u:object_r:usb_bus:s0
+/dev/bus/usb(/.*)?      u:object_r:usb_device:s0
 /dev/diag	u:object_r:diag_device:s0
 /dev/dumpstate	u:object_r:dumpstate_device:s0
 /dev/i2c.*		u:object_r:i2c_device:s0
@@ -461,6 +461,9 @@
 /efs/FactoryApp/test_nv	u:object_r:radio_factoryapp_efs_file:s0
 /efs/gyro_cal_data	u:object_r:sensor_efs_file:s0
 /efs/nv_data.bin(/.*)?	u:object_r:bin_nv_data_efs_file:s0
+
+# Exynrgd
+/sbin/exyrngd u:object_r:exyrngd_exec:s0
 
 #line 1 "vendor/samsung/common/sepolicy/vmware/file_contexts"
 # VMware daemon
