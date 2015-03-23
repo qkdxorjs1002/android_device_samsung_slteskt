@@ -52,14 +52,13 @@ public class SlteRIL extends RIL {
     private static final int RIL_REQUEST_SIM_TRANSMIT_CHANNEL = 10029;
 
     public SlteRIL(Context context, int networkMode, int cdmaSubscription) {
-        super(context, networkMode, cdmaSubscription, null);
+        super(context, networkMode, cdmaSubscription);
         mQANElements = 6;
     }
 
     public SlteRIL(Context context, int preferredNetworkType,
                    int cdmaSubscription, Integer instanceId) {
         super(context, networkMode, cdmaSubscription, instanceId);
-        mQANElements = 6;
     }
 
     public void
