@@ -56,11 +56,6 @@ public class SlteRIL extends RIL {
         mQANElements = 6;
     }
 
-    public SlteRIL(Context context, int preferredNetworkType,
-                   int cdmaSubscription, Integer instanceId) {
-        super(context, networkMode, cdmaSubscription, instanceId);
-    }
-
     public void
     acceptCall(int index, Message result) {
         RILRequest rr =
