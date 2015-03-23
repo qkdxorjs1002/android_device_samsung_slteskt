@@ -21,9 +21,8 @@ PRODUCT_PACKAGES += \
     ueventd.universal5430.rc \
     init.sec.boot.sh
 
-# This file gets automatically copied to the recovery root by CM.
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/init.recovery.universal5430.rc:root/init.recovery.universal5430.rc
+PRODUCT_PACKAGES += \
+    init.recovery.universal5430.rc
 
 ###########################################################
 ### PERMISSONS
