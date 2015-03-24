@@ -82,7 +82,6 @@ WIFI_DRIVER_NVRAM_PATH_PARAM     := "/sys/module/dhd/parameters/nvram_path"
 WIFI_DRIVER_NVRAM_PATH           := "/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_FW_PATH_STA          := "/etc/wifi/bcmdhd_sta.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/etc/wifi/bcmdhd_apsta.bin"
-
 # MACLOADER
 BOARD_HAVE_SAMSUNG_WIFI := true
 
@@ -99,15 +98,25 @@ BOARD_NEEDS_MEMORYHEAPION := true
 BOARD_USES_SCALER := true
 # frameworks/av/camera, camera blob support
 COMMON_GLOBAL_CFLAGS += -DSAMSUNG_CAMERA_HARDWARE
+# frameworks/av/media/libstagefright, for libwvm.so
+COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 
-# CHARCHER
-BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+# CHARGER
 BOARD_BATTERY_DEVICE_NAME := battery
+# system/core/init/Android.mk
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+# system/core/healthd/Android.mk
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_SHOW_PERCENTAGE := true
+CHARGING_ENABLED_PATH := /sys/class/power_supply/battery/batt_lp_charging
 
 ### RIL
 BOARD_VENDOR := samsung
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+
+### FONTS
+EXTENDED_FONT_FOOTPRINT := true
 
 ### WEBKIT
 ENABLE_WEBGL := true

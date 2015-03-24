@@ -254,8 +254,12 @@ const struct string_to_enum out_channels_name_to_enum_table[] = {
 
 static int get_output_device_id(audio_devices_t device)
 {
-    if (device == AUDIO_DEVICE_NONE)
+    if (device == AUDIO_DEVICE_NONE) {
+        ALOGV("%s: AUDIO_DEVICE_NONE\n", __func__);
         return OUT_DEVICE_NONE;
+    }
+
+    ALOGV("%s: popcount: %d\n", __func__, popcount(device));
 
     if (popcount(device) == 2) {
         if ((device == (AUDIO_DEVICE_OUT_SPEAKER |
@@ -309,7 +313,7 @@ static int get_input_source_id(audio_source_t source, bool wb_amr)
         ALOGV("%s: AUDIO_SOURCE_VOICE_COMMUNICATION\n", __func__);
         return IN_SOURCE_VOICE_COMMUNICATION;
     case AUDIO_SOURCE_VOICE_CALL:
-        ALOGV("%s: AUDIO_SOURCE_VOICE_CALL:\n", __func__);
+        ALOGV("%s: AUDIO_SOURCE_VOICE_CALL\n", __func__);
         if (wb_amr) {
             return IN_SOURCE_VOICE_CALL_WB;
         }
@@ -695,6 +699,8 @@ static void adev_set_call_audio_path(struct audio_device *adev)
 {
     enum ril_audio_path device_type;
 
+    ALOGV("%s: out_device=0x%08x", __func__, adev->out_device);
+
     switch(adev->out_device) {
         case AUDIO_DEVICE_OUT_SPEAKER:
             device_type = SOUND_AUDIO_PATH_SPEAKER;
@@ -791,7 +797,7 @@ static int start_output_stream(struct stream_out *out)
         set_hdmi_channels(adev, out->config.channels);
     }
 
-    ALOGV("%s: stream out device: %d, actual: %d",
+    ALOGV("%s: stream out device: 0x%08x, actual: 0x%08x",
           __func__, out->device, adev->out_device);
 
     return 0;
@@ -925,7 +931,7 @@ static void release_buffer(struct resampler_buffer_provider *buffer_provider,
 static ssize_t read_frames(struct stream_in *in, void *buffer, ssize_t frames)
 {
     ssize_t frames_wr = 0;
-    size_t frame_size = audio_stream_frame_size(&in->stream.common);
+    size_t frame_size = audio_stream_in_frame_size(&in->stream);
 
     while (frames_wr < frames) {
         size_t frames_rd = frames - frames_wr;
@@ -978,7 +984,7 @@ static size_t out_get_buffer_size(const struct audio_stream *stream)
     struct stream_out *out = (struct stream_out *)stream;
 
     return out->config.period_size *
-            audio_stream_frame_size((struct audio_stream *)stream);
+           audio_stream_out_frame_size((const struct audio_stream_out *)stream);
 }
 
 static audio_channel_mask_t out_get_channels(const struct audio_stream *stream)
@@ -1250,7 +1256,7 @@ exit:
     pthread_mutex_unlock(&out->lock);
 
     if (ret != 0) {
-        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
+        usleep(bytes * 1000000 / audio_stream_out_frame_size(&stream) /
                out_get_sample_rate(&stream->common));
     }
 
@@ -1461,7 +1467,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void* buffer,
     int ret = 0;
     struct stream_in *in = (struct stream_in *)stream;
     struct audio_device *adev = in->dev;
-    size_t frames_rq = bytes / audio_stream_frame_size(&stream->common);
+    size_t frames_rq = bytes / audio_stream_in_frame_size(&stream);
 
     /*
      * acquiring hw device mutex systematically is useful if a low
@@ -1501,7 +1507,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void* buffer,
 
 exit:
     if (ret < 0)
-        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
+        usleep(bytes * 1000000 / audio_stream_in_frame_size(&stream) /
                in_get_sample_rate(&stream->common));
 
     pthread_mutex_unlock(&in->lock);
@@ -1556,7 +1562,8 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
                                    audio_devices_t devices,
                                    audio_output_flags_t flags,
                                    struct audio_config *config,
-                                   struct audio_stream_out **stream_out)
+                                   struct audio_stream_out **stream_out,
+                                   const char *address __unused)
 {
     struct audio_device *adev = (struct audio_device *)dev;
     struct stream_out *out;
@@ -1834,7 +1841,10 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
                                   audio_io_handle_t handle,
                                   audio_devices_t devices,
                                   struct audio_config *config,
-                                  struct audio_stream_in **stream_in)
+                                  struct audio_stream_in **stream_in,
+                                  audio_input_flags_t flags __unused,
+                                  const char *address __unused,
+                                  audio_source_t source __unused)
 {
     struct audio_device *adev = (struct audio_device *)dev;
     struct stream_in *in;
@@ -1877,9 +1887,11 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     in->device = devices & ~AUDIO_DEVICE_BIT_IN;
     in->io_handle = handle;
     in->channel_mask = config->channel_mask;
+    /* TODO support low latency pcm config -> AUDIO_INPUT_FLAG_FAST */
 
-    in->buffer = malloc(pcm_config_in.period_size * pcm_config_in.channels
-                                               * audio_stream_frame_size(&in->stream.common));
+    in->buffer = malloc(pcm_config_in.period_size *
+                        pcm_config_in.channels *
+                        audio_stream_in_frame_size(&in->stream));
 
     if (!in->buffer) {
         ret = -ENOMEM;
