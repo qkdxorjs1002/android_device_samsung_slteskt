@@ -138,10 +138,12 @@ BOARD_SEPOLICY_UNION := \
 	device.te \
 	domain.te \
 	exyrngd.te \
+	init.te \
 	file_contexts \
 	file.te \
 	macloader.te \
 	recovery.te \
+	rild.te \
 	ueventd.te
 
 ###########################################################

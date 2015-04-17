@@ -1,2 +1,11 @@
+# modem daemon sec label
 type cpboot-daemon, domain;
 type cpboot-daemon_exec, exec_type, file_type;
+
+tmpfs_domain(cpboot-daemon)
+wakelock_use(cpboot-daemon)
+
+# FIXME neverallow rule
+# allow cpboot-daemon self:capability mknod;
+allow cpboot-daemon device:dir { add_name write remove_name };
+allow cpboot-daemon kernel:system syslog_read;
