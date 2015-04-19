@@ -20,6 +20,8 @@ etc/wifi/nvram_net.txt_muratafem1
 etc/wifi/nvram_net.txt_semco
 etc/wifi/nvram_net.txt_semco3rd
 etc/wifi/nvram_net.txt_wisol
+etc/wifi/olsrd.conf
+bin/olsrd
 
 ### NFC
 vendor/firmware/sec_s3fwrn5_firmware.bin
