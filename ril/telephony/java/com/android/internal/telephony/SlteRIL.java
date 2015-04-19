@@ -346,7 +346,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void getGsmBroadcastConfig(Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: getGsmBroadcastConfig");
+        Rlog.v(RILJ_LOG_TAG, "SS300: getGsmBroadcastConfig");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -357,7 +357,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void setGsmBroadcastConfig(SmsBroadcastConfigInfo[] config, Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: setGsmBroadcastConfig");
+        Rlog.v(RILJ_LOG_TAG, "SS300: setGsmBroadcastConfig");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -368,7 +368,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void setGsmBroadcastActivation(boolean activate, Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: setGsmBroadcastActivation");
+        Rlog.v(RILJ_LOG_TAG, "SS300: setGsmBroadcastActivation");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -379,7 +379,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void getCdmaBroadcastConfig(Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: getCdmaBroadcastConfig");
+        Rlog.v(RILJ_LOG_TAG, "SS300: getCdmaBroadcastConfig");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -390,7 +390,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void setCdmaBroadcastConfig(CdmaSmsBroadcastConfigInfo[] configs, Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: setCdmaBroadcastConfig");
+        Rlog.v(RILJ_LOG_TAG, "SS300: setCdmaBroadcastConfig");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -401,7 +401,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void setCdmaBroadcastActivation(boolean activate, Message response) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: setCdmaBroadcastActivation");
+        Rlog.v(RILJ_LOG_TAG, "SS300: setCdmaBroadcastActivation");
 
         if (response != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -412,7 +412,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void getCellInfoList(Message result) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: getCellInfoList");
+        Rlog.v(RILJ_LOG_TAG, "SS300: getCellInfoList");
 
         if (result != null) {
             CommandException e = new CommandException(CommandException.Error.REQUEST_NOT_SUPPORTED);
@@ -429,7 +429,7 @@ public class SlteRIL extends RIL {
 
     @Override
     public void setDataAllowed(boolean allowed, Message result) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: setDataAllowed");
+        Rlog.v(RILJ_LOG_TAG, "SS300: setDataAllowed");
 
         if (result != null) {
             AsyncResult.forMessage(result, 0, null);
@@ -442,7 +442,7 @@ public class SlteRIL extends RIL {
      */
     @Override
     public void sendSMSExpectMore(String smscPDU, String pdu, Message result) {
-        Rlog.v(RILJ_LOG_TAG, "XMM7260: sendSMSExpectMore");
+        Rlog.v(RILJ_LOG_TAG, "SS300: sendSMSExpectMore");
 
         RILRequest rr = RILRequest.obtain(RIL_REQUEST_SEND_SMS, result);
         constructGsmSendSmsRilRequest(rr, smscPDU, pdu);
