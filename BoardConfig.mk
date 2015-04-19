@@ -124,10 +124,6 @@ ENABLE_WEBGL := true
 ### CMHW
 BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
-### OTA PACKAGING
-#TARGET_PROVIDES_RELEASETOOLS := true
-#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/samsung/slteskt/releasetools/ota_from_target_files
-
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
 	device/samsung/slteskt/sepolicy
