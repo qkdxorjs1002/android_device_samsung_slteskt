@@ -112,3 +112,8 @@ on property:init.svc.macloader=stopped
     restorecon /data/.cid.info
     chown system root /data/.rev
     chmod 0664 /data/.rev
+
+service olsrd /system/bin/olsrd -f /etc/wifi/olsrd.conf
+    class main
+    disabled
+    oneshot
