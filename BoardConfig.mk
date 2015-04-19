@@ -155,6 +155,7 @@ DEVICE_RESOLUTION := 720x1280
 # Use our own init.rc without setting up functionfs
 TARGET_RECOVERY_PIXEL_FORMAT := "BRGA_8888"
 TARGET_RECOVERY_DEVICE_MODULES += prebuilt_file_contexts exyrngd
+TARGET_OTA_ASSERT_DEVICE := sltexx,slte,slteskt
 
 TW_BRIGHTNESS_PATH := /sys/class/backlight/panel/brightness
 TW_MAX_BRIGHTNESS := 255
