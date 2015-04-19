@@ -124,6 +124,9 @@ ENABLE_WEBGL := true
 ### CMHW
 BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
+### Disable Transparent Compression
+TARGET_TRANSPARENT_COMPRESSION_METHOD := false
+
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
 	device/samsung/slteskt/sepolicy
