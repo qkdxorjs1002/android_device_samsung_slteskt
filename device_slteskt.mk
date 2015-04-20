@@ -72,7 +72,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PACKAGES += \
 	libion_exynos \
-	gralloc.exynos5
+	gralloc.exynos5 \
+	hwcomposer.exynos5
 
 ###########################################################
 ### RADIO
@@ -81,10 +82,6 @@ PRODUCT_PACKAGES += \
 # cpboot-daemon for ss300 modem
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/ril/sbin/cbd:root/sbin/cbd
-
-PRODUCT_PACKAGES += \
-    libsecril-client \
-    libsecril-client-sap
 
 ###########################################################
 ### WIFI
@@ -145,6 +142,12 @@ PRODUCT_COPY_FILES += \
 	frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
 	$(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
 	$(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
+
+PRODUCT_PACKAGES += \
+    libcsc \
+    libExynosOMX_Core \
+    libOMX.Exynos.MP3.Decoder \
+    libstagefrighthw
 
 ###########################################################
 ### POWER
