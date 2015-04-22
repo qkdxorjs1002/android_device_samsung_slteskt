@@ -111,6 +111,9 @@ BOARD_CHARGER_SHOW_PERCENTAGE := true
 CHARGING_ENABLED_PATH := /sys/class/power_supply/battery/batt_lp_charging
 
 ### RIL
+BOARD_PROVIDES_LIBRIL := true
+BOARD_MOBILEDATA_INTERFACE_NAME := "rmnet0"
+BOARD_MODEM_TYPE := ss300
 BOARD_VENDOR := samsung
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
