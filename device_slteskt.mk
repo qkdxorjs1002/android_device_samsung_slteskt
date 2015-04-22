@@ -72,8 +72,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PACKAGES += \
 	libion_exynos \
-	gralloc.exynos5 \
-	hwcomposer.exynos5
+	gralloc.exynos5
 
 ###########################################################
 ### RADIO
@@ -147,10 +146,8 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
 
 PRODUCT_PACKAGES += \
-    libcsc \
     libExynosOMX_Core \
-    libOMX.Exynos.MP3.Decoder \
-    libstagefrighthw
+    libOMX.Exynos.MP3.Decoder
 
 ###########################################################
 ### POWER
