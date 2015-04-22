@@ -131,9 +131,7 @@ lib/libreference-ril.so
 lib/libril.so
 lib/librilutils.so
 bin/argosd
-bin/debug_interface_proxy
 bin/rild
-bin/mmd
 
 ### Mobicore
 app/FFFFFFFF000000000000000000000001.drbin
