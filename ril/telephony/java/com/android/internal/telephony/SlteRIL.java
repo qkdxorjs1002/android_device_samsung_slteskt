@@ -436,6 +436,7 @@ public class SlteRIL extends RIL {
             result.sendToTarget();
         }
     }
+    
     /**
      * The RIL can't handle the RIL_REQUEST_SEND_SMS_EXPECT_MORE
      * request properly, so we use RIL_REQUEST_SEND_SMS instead.
