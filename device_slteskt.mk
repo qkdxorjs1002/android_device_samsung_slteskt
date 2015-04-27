@@ -18,6 +18,7 @@ PRODUCT_PACKAGES += \
     init.universal5430.rc \
     init.universal5430.usb.rc \
     init.universal5430.wifi.rc \
+    init.universal5430.baseband.rc \
     ueventd.universal5430.rc \
     init.sec.boot.sh
 
@@ -72,6 +73,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PACKAGES += \
 	libion_exynos \
+	hwcomposer.exynos5 \
 	gralloc.exynos5
 
 ###########################################################
@@ -147,7 +149,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     libExynosOMX_Core \
-    libOMX.Exynos.MP3.Decoder
+    libstagefrighthw
 
 ###########################################################
 ### POWER
@@ -207,12 +209,48 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.sys.isUsbOtgEnabled=true
 
 ###########################################################
+### KEY MANAGEMENT
+###########################################################
+
+PRODUCT_PACKAGES += \
+    keystore.exynos5
+
+###########################################################
+### MOBICORE
+###########################################################
+
+PRODUCT_PACKAGES += \
+    libMcClient \
+    libMcRegistry \
+    libPaApi \
+    libgdmcprov \
+    mcDriverDaemon
+
+###########################################################
 ### PACKAGES
 ###########################################################
 
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
+
+###########################################################
+### DEFAULT PROPS
+###########################################################
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.debug_level=0x4948 \
+    ro.selinux=permissive \
+    ro.secure=0 \
+    ro.debuggable=1 \
+    persist.service.adb.enable=1
+
+###########################################################
+### SWAP
+###########################################################
+
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/ramdisk/sbin/sswap:root/sbin/sswap
 
 $(call inherit-product-if-exists, hardware/samsung_slsi/exynos5-insignal/exynos5.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)

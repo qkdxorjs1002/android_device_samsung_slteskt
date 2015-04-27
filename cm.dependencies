@@ -24,7 +24,7 @@
         "target_path": "hardware/samsung_slsi/openmax"
     },
     {
-        "repository": "android_kernel_samsung_slte",
-        "target_path": "kernel/samsung/slte"
+        "repository": "android_kernel_samsung_slteskt",
+        "target_path": "kernel/samsung/slteskt"
     }
 ]

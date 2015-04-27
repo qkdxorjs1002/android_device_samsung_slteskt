@@ -1,6 +1,5 @@
 ### Bluetooth
-vendor/firmware/BT_FW_VER_BCM4354_003.001.012.0239.0491_S_KR_B80_ORC_TxPwrBy0p5dB.hcd
-vendor/firmware/bcm4350.hcd
+vendor/firmware/bcm4350_V0301.0646.hcd
 
 ### Wifi
 etc/wifi/bcmdhd_apsta.bin
@@ -87,9 +86,7 @@ vendor/firmware/seiren_fw_sram.bin
 
 ### Camera
 lib/hw/camera.universal5430.so
-lib/libarcsoft_nighthawk.so
 lib/libexynoscamera.so
-lib/libliveframework.so
 lib/libvdis.so
 vendor/firmware/setfile_2p2_12m.bin
 vendor/firmware/setfile_6b2.bin
@@ -104,6 +101,10 @@ lib/libwrappergps.so
 ### HWC
 vendor/lib/libmalicore.bc
 vendor/lib/egl/libGLES_mali.so
+vendor/lib/libOpenCL.so
+vendor/lib/libOpenCL.so.1
+vendor/lib/libOpenCL.so.1.1
+vendor/lib/egl/gpr_list.cfg
 vendor/lib/libRSDriverArm.so
 
 ### Sensors
@@ -113,12 +114,17 @@ lib/libmllite.so
 lib/libmplmpu.so
 lib/libyasalgo.so
 
+### Fingerprint
+bin/vcsFPService
+
+
 ### Widevine
-vendor/lib/drm/libdrmwvmplugin.so
+vendor/lib/mediadrm/libdrmclearkeyplugin.so
 vendor/lib/mediadrm/libwvdrmengine.so
 vendor/lib/libWVStreamControlAPI_L1.so
 vendor/lib/libwvdrm_L1.so
 vendor/lib/libwvm.so
+lib/drm/libdrmwvmplugin.so
 
 ### RNDG
 bin/exyrngd
@@ -130,8 +136,8 @@ lib/libsec-ril.so
 lib/libreference-ril.so
 lib/libril.so
 lib/librilutils.so
-bin/argosd
 bin/rild
+bin/diagexe
 
 ### Mobicore
 app/FFFFFFFF000000000000000000000001.drbin
