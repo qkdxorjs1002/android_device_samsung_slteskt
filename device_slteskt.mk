@@ -69,7 +69,10 @@ PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.opengles.version=196608
+	ro.opengles.version=196608 \
+	ro.sf.lcd_density=480 \
+	debug.hwc.winupdate=1 \
+	debug.hwc.otf=1
 
 PRODUCT_PACKAGES += \
 	libion_exynos \

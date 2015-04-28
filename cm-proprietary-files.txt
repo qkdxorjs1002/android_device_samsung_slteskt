@@ -137,6 +137,8 @@ lib/libreference-ril.so
 lib/libril.so
 lib/librilutils.so
 bin/rild
+bin/ddexe
+bin/ddexe_real
 bin/diagexe
 
 ### Mobicore

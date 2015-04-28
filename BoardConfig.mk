@@ -62,6 +62,10 @@ BOARD_HDMI_INCAPABLE := true
 # frameworks/native/services/surfaceflinger
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 5
 
+# WFD
+BOARD_USES_WFD_SERVICE := true
+BOARD_USES_WFD := true
+
 ### OMX (insignal)
 BOARD_USE_DMA_BUF := true
 BOARD_USE_IMPROVED_BUFFER := true
@@ -71,18 +75,18 @@ BOARD_USE_ANB_OUTBUF_SHARE := true
 BOARD_USE_GSC_RGB_ENCODER := true
 
 # WIFI
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
-BOARD_WLAN_DEVICE                := bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
-WIFI_DRIVER_NVRAM_PATH_PARAM     := "/sys/module/dhd/parameters/nvram_path"
-WIFI_DRIVER_NVRAM_PATH           := "/etc/wifi/nvram_net.txt"
-WIFI_DRIVER_FW_PATH_STA          := "/etc/wifi/bcmdhd_sta.bin"
-WIFI_DRIVER_FW_PATH_AP           := "/etc/wifi/bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_MFG          := "/etc/wifi/bcmdhd_mfg.bin"
+BOARD_WPA_SUPPLICANT_DRIVER			:= NL80211
+WPA_SUPPLICANT_VERSION							:= VER_0_8_X
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB	:= lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER							:= NL80211
+BOARD_HOSTAPD_PRIVATE_LIB					:= lib_driver_cmd_bcmdhd
+BOARD_WLAN_DEVICE									:= bcmdhd
+WIFI_DRIVER_FW_PATH_PARAM    			    := "/sys/module/dhd/parameters/firmware_path"
+WIFI_DRIVER_NVRAM_PATH_PARAM		:= "/sys/module/dhd/parameters/nvram_path"
+WIFI_DRIVER_NVRAM_PATH							:= "/etc/wifi/nvram_net.txt"
+WIFI_DRIVER_FW_PATH_STA							:= "/etc/wifi/bcmdhd_sta.bin"
+WIFI_DRIVER_FW_PATH_AP							:= "/etc/wifi/bcmdhd_apsta.bin"
+WIFI_DRIVER_FW_PATH_MFG						:= "/etc/wifi/bcmdhd_mfg.bin"
 
 # MACLOADER
 BOARD_HAVE_SAMSUNG_WIFI := true
@@ -113,8 +117,6 @@ BOARD_CHARGER_SHOW_PERCENTAGE := true
 CHARGING_ENABLED_PATH := /sys/class/power_supply/battery/batt_lp_charging
 
 ### RIL
-BOARD_MOBILEDATA_INTERFACE_NAME := "rmnet0"
-BOARD_MODEM_TYPE := ss300
 BOARD_VENDOR := samsung
 # RIL.java overwrite
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
