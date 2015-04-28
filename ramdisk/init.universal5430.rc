@@ -32,10 +32,6 @@ on init
     write /sys/class/net/rmnet1/queues/rx-0/rps_cpus 1
     write /sys/class/net/rmnet2/queues/rx-0/rps_cpus 1
     write /sys/class/net/rmnet3/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet4/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet5/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet6/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rmnet7/queues/rx-0/rps_cpus 1
     write /proc/sys/net/core/netdev_max_backlog 5000
 
     mkdir /tombstones

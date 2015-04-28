@@ -1,5 +1,20 @@
 #
-# system.prop for slte
+# HWUI_BUILD_PROPERTIES
+#
+ro.hwui.texture_cache_size=24
+ro.hwui.layer_cache_size=16
+ro.hwui.path_cache_size=4
+ro.hwui.shape_cache_size=1
+ro.hwui.gradient_cache_size=0.5
+ro.hwui.drop_shadow_cache_size=2
+ro.hwui.r_buffer_cache_size=2
+ro.hwui.text_small_cache_width=1024
+ro.hwui.text_small_cache_height=512
+ro.hwui.text_large_cache_width=2048
+ro.hwui.text_large_cache_height=1024
+
+#
+# system.prop for slteskt
 #
 ro.product.model=SM-G850S
 ro.product.brand=samsung
@@ -11,3 +26,14 @@ ro.sf.lcd_density=320
 rild.libpath=/system/lib/libsec-ril.so
 rild.libargs=-d /dev/ttyS0
 ro.telephony.ril_class=SlteRIL
+
+#
+# system.prop for universal5430
+#
+
+# SAMP LMK minfree
+ro.config.oomminfree_high32=73728,92160,110592,129024,147456,184320
+
+ro.arch=exynos5430
+ro.kernel.qemu.gles=1
+persist.demo.hdmirotationlock=false

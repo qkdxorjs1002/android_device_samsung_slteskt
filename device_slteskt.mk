@@ -68,7 +68,10 @@ PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.opengles.version=196608
+	ro.opengles.version=196608 \
+	ro.sf.lcd_density=480 \
+	debug.hwc.winupdate=1 \
+	debug.hwc.otf=1
 
 PRODUCT_PACKAGES += \
 	libion_exynos \
@@ -204,12 +207,41 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.sys.isUsbOtgEnabled=true
 
 ###########################################################
+### KEY MANAGEMENT
+###########################################################
+
+PRODUCT_PACKAGES += \
+    keystore.exynos5
+
+###########################################################
+### MOBICORE
+###########################################################
+
+PRODUCT_PACKAGES += \
+    libMcClient \
+    libMcRegistry \
+    libPaApi \
+    libgdmcprov \
+    mcDriverDaemon
+
+###########################################################
 ### PACKAGES
 ###########################################################
 
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
+
+###########################################################
+### DEFAULT PROPS
+###########################################################
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.debug_level=0x4948 \
+    ro.selinux=permissive \
+    ro.secure=0 \
+    ro.debuggable=1 \
+    persist.service.adb.enable=1
 
 $(call inherit-product-if-exists, hardware/samsung_slsi/exynos5-insignal/exynos5.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
