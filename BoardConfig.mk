@@ -39,6 +39,9 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 28219277312
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 #TARGET_PREBUILT_KERNEL := device/samsung/slteskt/recovery-kernel
+
+# for nov kernel
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := sm-arm-eabi-4.8.5
 TARGET_KERNEL_CONFIG := cm_exynos5430-slteskt_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/slteskt
 
